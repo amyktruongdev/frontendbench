@@ -2,11 +2,17 @@ import { Card, CardContent } from "../components/ui/card";
 import { useState, useEffect } from "react";
 import EquipmentUsageCards from "../components/dashboard/EquipmentUsageCards";
 import DashboardFooter from "../components/dashboard/DashboardFooter";
+import io from "socket.io-client";
+
+const socket = io(process.env.REACT_APP_DOMAIN_NAME as string, {
+  transports: ["websocket"],
+});
 
 export default function DashboardPage() {
   const [summary, setSummary] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -30,7 +36,60 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const usageRate = summary?.usageRate || 0;
+  useEffect(() => {
+    socket.on("statusUpdate", (data) => {
+      console.log("Received real-time status update:", data);
+
+      setSummary((prevSummary: any) => {
+        if (!prevSummary || !prevSummary.equipmentUsage) return prevSummary;
+
+        const updatedEquipmentUsage = prevSummary.equipmentUsage.map(
+          (equipment: any) => {
+            if (equipment.equipmentId === data.equipmentId) {
+              if (equipment.inUse !== data.inUse) {
+                const message = data.inUse
+                  ? `${equipment.name} is now IN USE`
+                  : `${equipment.name} is now AVAILABLE`;
+                setToastMessage(message);
+
+                setTimeout(() => setToastMessage(null), 3000);
+              }
+
+              return {
+                ...equipment,
+                inUse: data.inUse,
+                lastUpdated: data.timestamp,
+              };
+            }
+            return equipment;
+          }
+        );
+
+        return {
+          ...prevSummary,
+          equipmentUsage: updatedEquipmentUsage,
+        };
+      });
+    });
+
+    return () => {
+      socket.off("statusUpdate");
+    };
+  }, []);
+
+  const usageRate = summary?.equipmentUsage
+    ? Math.round(
+        (summary.equipmentUsage.reduce(
+          (acc: number, eq: any) => acc + eq.in_use,
+          0
+        ) /
+          summary.equipmentUsage.reduce(
+            (acc: number, eq: any) => acc + eq.total,
+            0
+          )) *
+          100
+      )
+    : 0;
   let statusBanner = null;
 
   if (usageRate >= 75) {
@@ -54,35 +113,42 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="text-center mb-6">
-        <h1 className="text-6xl font-extrabold text-red-500 tracking-wider mb-1 drop-shadow">
-          OpenBench
-        </h1>
-        <p className="text-gray-600 text-lg">
-          {currentTime.toLocaleDateString()} •{" "}
-          {currentTime.toLocaleTimeString()}
-        </p>
-      </div>
-      <Card className="border-red-300">
-        <CardContent className="p-6">
-          <h2 className="text-2xl font-semibold text-center text-red-600 mb-4">
-            Dashboard Overview
-          </h2>
-          {loading || !summary ? (
-            <p className="text-center text-gray-600">Loading...</p>
-          ) : (
-            <div className="text-center space-y-2">
-              <p>🏋️‍♂️ Equipment Count: {summary.equipmentCount}</p>
-              {statusBanner}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-      {summary?.equipmentUsage && (
-        <EquipmentUsageCards usage={summary.equipmentUsage} />
+    <>
+      {toastMessage && (
+        <div className="fixed top-6 right-6 bg-black text-white py-2 px-4 rounded-lg shadow-lg z-50 animate-fade-in">
+          {toastMessage}
+        </div>
       )}
-      <DashboardFooter />
-    </div>
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="text-center mb-6">
+          <h1 className="text-6xl font-extrabold text-red-500 tracking-wider mb-1 drop-shadow">
+            OpenBench
+          </h1>
+          <p className="text-gray-600 text-lg">
+            {currentTime.toLocaleDateString()} •{" "}
+            {currentTime.toLocaleTimeString()}
+          </p>
+        </div>
+        <Card className="border-red-300">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-semibold text-center text-red-600 mb-4">
+              Dashboard Overview
+            </h2>
+            {loading || !summary ? (
+              <p className="text-center text-gray-600">Loading...</p>
+            ) : (
+              <div className="text-center space-y-2">
+                <p>🏋️‍♂️ Equipment Count: {summary.equipmentCount}</p>
+                {statusBanner}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+        {summary?.equipmentUsage && (
+          <EquipmentUsageCards usage={summary.equipmentUsage} />
+        )}
+        <DashboardFooter />
+      </div>
+    </>
   );
 }
