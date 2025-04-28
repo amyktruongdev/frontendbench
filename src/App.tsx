@@ -18,11 +18,15 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/verify" element={<VerificationPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/equipment-map" element={<EquipmentMapPage />} />
           <Route path="/equipment" element={<EquipmentPage />} />
           <Route path="/sensors" element={<SensorStatusPage />} />
+          <Route path="/mfa" element={<MFAVerificationPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/technician" element={<div>Technician Tools</div>} />
           <Route path="/mfa" element={<MFAVerificationPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/technician" element={<div>Technician Tools</div>} />
