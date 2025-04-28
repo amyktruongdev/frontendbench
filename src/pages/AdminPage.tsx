@@ -38,7 +38,9 @@ export default function AdminPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Users</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Manage Users
+            </h2>
             <Button
               onClick={() => navigate("/admin/manage-users")}
               className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
@@ -50,7 +52,9 @@ export default function AdminPage() {
 
         <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Equipment</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Manage Equipment
+            </h2>
             <Button
               onClick={() => navigate("/admin/manage-equipment")}
               className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
@@ -62,7 +66,9 @@ export default function AdminPage() {
 
         <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">View Logs</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              View Logs
+            </h2>
             <Button
               onClick={() => navigate("/admin/logs")}
               className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
@@ -74,7 +80,9 @@ export default function AdminPage() {
 
         <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Send Alert</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Send Alert
+            </h2>
             <Button
               onClick={() => navigate("/admin/send-alert")}
               className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"

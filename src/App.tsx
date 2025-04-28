@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EquipmentMapPage from "./components/ui/EquipmentMapPage";
-import VerificationPage from "./pages/VerificationPage";
 import "./index.css";
+import MFAVerificationPage from "./pages/MFAVerification";
 import Layout from "./components/Layout";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
 import DashboardPage from "./pages/DashboardPage";
 import EquipmentPage from "./pages/EquipmentPage";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SensorStatusPage from "./pages/SensorStatusPage";
-import MFAVerificationPage from "./pages/MFAVerififcation";
-import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   return (
@@ -26,6 +24,9 @@ export default function App() {
           <Route path="/equipment-map" element={<EquipmentMapPage />} />
           <Route path="/equipment" element={<EquipmentPage />} />
           <Route path="/sensors" element={<SensorStatusPage />} />
+          <Route path="/mfa" element={<MFAVerificationPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/technician" element={<div>Technician Tools</div>} />
           <Route path="/mfa" element={<MFAVerificationPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/technician" element={<div>Technician Tools</div>} />
