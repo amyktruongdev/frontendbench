@@ -12,11 +12,12 @@ interface EquipmentItem {
 
 const EquipmentMapPage = () => {
     const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         const fetchEquipment = async () => {
             try {
-                const res = await fetch(`${process.env.REACT_APP_DOMAIN_NAME}api/equipment/map`);
+                const res = await fetch(`${process.env.REACT_APP_DOMAIN_NAME}/api/equipment/map`);
                 const data = await res.json();
                 console.log("📦 Equipment data:", data);
                 setEquipment(data || []);
@@ -27,13 +28,18 @@ const EquipmentMapPage = () => {
         fetchEquipment();
     }, []);
 
+    useEffect(() => {
+        const interval = setInterval(() => setCurrentTime(new Date()), 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     const equipmentById = (id: string) => {
         return equipment.find((e) => e.equipment_id === id);
     };
 
     const renderBox = (id: string) => {
         const eq = equipmentById(id);
-        const statusColor = eq ? (eq.in_use ? "bg-red-200" : "bg-green-200") : "bg-gray-100";
+        const statusColor = eq ? (eq.in_use ? "bg-red-200 border-red-500" : "bg-green-200 border-green-500") : "bg-gray-100 border-gray-300";
         const tooltip = eq
             ? `Equipment: ${eq.equipment_name}\nSensor: ${eq.sensor_id}\nID: ${eq.equipment_id}\nBattery: ${eq.battery}%\nStatus: ${eq.in_use ? "In Use" : "Available"}`
             : "Not assigned";
@@ -42,24 +48,60 @@ const EquipmentMapPage = () => {
         return (
             <div
                 key={id}
-                className={`w-32 h-24 flex flex-col items-center justify-center text-center text-sm font-medium border border-gray-400 rounded ${statusColor}`}
+                className={`w-36 h-24 flex flex-col items-center justify-center text-center text-sm font-medium rounded-lg shadow-md transition-all duration-150 hover:scale-105 ${statusColor}`}
                 title={tooltip}
             >
-                <span className="font-semibold text-gray-800">{label}</span>
-                <span className="text-xs text-gray-600">ID: {id}</span>
+                <span className="font-semibold text-gray-800 truncate w-32">{label}</span>
+                <span className="text-xs text-gray-600 mt-1">ID: {id}</span>
             </div>
         );
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
-            <h1 className="text-3xl font-bold text-red-600 mb-6 text-center">Equipment Floor Map</h1>
-            <div className="grid grid-cols-5 gap-4 justify-items-center">
-                {["EQUIP-001", "EQUIP-002", "EQUIP-003", "EQUIP-004", "EQUIP-005",
-                    "EQUIP-011", "EQUIP-012", "EQUIP-013", "EQUIP-014", "EQUIP-015",
-                    "EQUIP-021", "EQUIP-022", "EQUIP-023", "EQUIP-024", "EQUIP-025",
-                    "EQUIP-032", "EQUIP-033", "EQUIP-034", "EQUIP-035"].map(renderBox)}
+        <div className="min-h-screen max-w-7xl mx-auto p-6">
+            <div className="text-center mb-12">
+                <h1 className="text-5xl font-extrabold text-red-500 tracking-wider mb-1 drop-shadow">OpenBench</h1>
+                <p className="text-gray-600 text-md">{currentTime.toLocaleDateString()} • {currentTime.toLocaleTimeString()}</p>
             </div>
+
+            <div className="bg-gray-50 rounded-lg shadow p-6 mb-12">
+                <h2 className="text-3xl font-bold text-red-600 mb-6 text-center">Equipment Floor Map</h2>
+                <div className="grid grid-cols-5 gap-6 justify-items-center">
+                    {["EQUIP-063", "EQUIP-064", "EQUIP-065", "EQUIP-066", "EQUIP-067",
+                        "EQUIP-068", "EQUIP-069", "EQUIP-070", "EQUIP-071", "EQUIP-072",
+                        "EQUIP-073", "EQUIP-074", "EQUIP-075", "EQUIP-076", "EQUIP-077",
+                        "EQUIP-078", "EQUIP-079", "EQUIP-080", "EQUIP-081"].map(renderBox)}
+                </div>
+            </div>
+
+            <footer className="bg-white border-t border-gray-300 pt-6 text-gray-700 text-sm text-center rounded-t-lg shadow-inner">
+                <div className="mb-4">
+                    <div className="w-32 h-2 bg-red-600 mb-2 mx-auto" />
+                    <h2 className="text-lg font-bold text-black">Student Recreation Center</h2>
+                    <p className="text-gray-500">University Student Union</p>
+                    <hr className="my-2 border-gray-300 w-1/2 mx-auto" />
+                    <p>18111 Nordhoff Street, Northridge, CA 91330-8449</p>
+                    <p className="mt-1 font-semibold">Phone: (818) 677-5434</p>
+                    <p className="text-red-600 underline mt-1 hover:text-red-700 cursor-pointer">Send email</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4 px-4">
+                    <div>
+                        <h3 className="text-md font-bold text-black">Building Hours</h3>
+                        <p>Mon–Fri: 6 a.m. – 10 p.m.</p>
+                        <p>Sat–Sun: 9 a.m. – 5 p.m.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-md font-bold text-black">Rec Pool</h3>
+                        <p><em>Jan 18 – Mar 16</em>:<br />Mon–Fri: 6 a.m. – 7 p.m.<br />Sat–Sun: 9 a.m. – 4:30 p.m.</p>
+                        <p className="mt-1"><em>Mar 17 – May 11</em>:<br />Mon–Fri: 6 a.m. – 9:30 p.m.<br />Sat–Sun: 9 a.m. – 4:30 p.m.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-md font-bold text-black">Ridge Rock Wall</h3>
+                        <p>Mon–Fri: 2 – 9 p.m.<br />Sat: Noon – 4 p.m.<br />Sun: Closed</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 };
