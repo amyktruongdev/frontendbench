@@ -10,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SensorStatusPage from "./pages/SensorStatusPage";
+import VerificationPage from "./pages/VerificationPage";
 
 export default function App() {
   return (

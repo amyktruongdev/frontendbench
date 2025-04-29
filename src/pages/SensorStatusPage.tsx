@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import { authFetch } from "../utils/authFetch";
->>>>>>> main
 import { Card, CardContent } from "../components/ui/card";
 import { useState, useEffect } from "react";
 
@@ -12,13 +9,9 @@ export default function SensorStatusPage() {
   useEffect(() => {
     const fetchSensors = async () => {
       try {
-<<<<<<< HEAD
-        const response = await fetch(
-          process.env.REACT_APP_DOMAIN_NAME + "api/sensors/status"
+        const response = await authFetch(
+          `${process.env.REACT_APP_DOMAIN_NAME}api/sensors/status`
         );
-=======
-        const response = await authFetch(`${process.env.REACT_APP_DOMAIN_NAME}api/sensors/status`);
->>>>>>> main
         const data = await response.json();
         setSensors(data);
       } catch (error) {
@@ -66,8 +59,4 @@ export default function SensorStatusPage() {
       </CardContent>
     </Card>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
