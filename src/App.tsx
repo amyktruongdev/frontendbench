@@ -6,18 +6,18 @@ import Layout from "./components/Layout";
 import AdminPage from "./pages/AdminPage";
 import DashboardPage from "./pages/DashboardPage";
 import EquipmentPage from "./pages/EquipmentPage";
-import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SensorStatusPage from "./pages/SensorStatusPage";
 import VerificationPage from "./pages/VerificationPage";
+import ManageUsersPage from "./pages/ManageUsersPage";
+import AdminLogsPage from "./pages/AdminLogsPage";
 
 export default function App() {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/verify" element={<VerificationPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
@@ -28,11 +28,12 @@ export default function App() {
           <Route path="/mfa" element={<MFAVerificationPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/technician" element={<div>Technician Tools</div>} />
-          <Route path="/mfa" element={<MFAVerificationPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/technician" element={<div>Technician Tools</div>} />
+          <Route path="/admin/manage-users" element={<ManageUsersPage />} />
+          <Route path="/admin/logs" element={<AdminLogsPage />} />
         </Routes>
       </Layout>
     </Router>
   );
 }
+
+

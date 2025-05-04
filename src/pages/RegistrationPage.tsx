@@ -60,106 +60,61 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-red-50">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl border border-red-300">
-        <h1 className="text-2xl font-bold text-center text-red-600 mb-4">
+    <main className="flex items-center justify-center min-h-screen bg-red-50" role="main"
+    aria-label="Registration Page">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl border border-red-300" role="form"
+        aria-labelledby="registration-heading">
+        <h1 id="registration-heading" className="text-2xl font-bold text-center text-red-600 mb-4">
           Create Your Account
         </h1>
         {error && (
-          <p className="text-red-600 text-sm text-center mb-2">{error}</p>
+          <p className="text-red-600 text-sm text-center mb-2" role="alert"
+          aria-live="assertive">{error}</p>
         )}
         {successMessage && (
-          <p className="text-green-600 text-sm text-center mb-2">
+          <p className="text-green-600 text-sm text-center mb-2" role="status"
+          aria-live="polite">
             {successMessage}
           </p>
         )}
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          aria-describedby="registration-heading"
         >
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              First Name
-            </label>
-            <input
-              name="firstName"
-              type="text"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Last Name
-            </label>
-            <input
-              name="lastName"
-              type="text"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              name="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
-          </div>
+          {/* Form Fields */}
+          {[
+            ["firstName", "First Name"],
+            ["lastName", "Last Name"],
+            ["username", "Username"],
+            ["email", "Email", "email"],
+            ["password", "Password", "password"],
+            ["confirmPassword", "Confirm Password", "password"],
+          ].map(([name, label, type = "text"]) => (
+            <div key={name as string}>
+              <label htmlFor={name as string} className="block mb-1 text-sm font-medium text-gray-700">
+                {label}
+              </label>
+              <input
+                id={name as string}
+                name={name as string}
+                type={type}
+                value={formData[name as keyof typeof formData]}
+                onChange={handleChange}
+                required
+                aria-required="true"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+              />
+            </div>
+          ))}
+
+          {/* Security Question 1 */}
           <div className="col-span-2">
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="securityQuestion1" className="block mb-1 text-sm font-medium text-gray-700">
               Security Question 1
             </label>
             <select
+              id="securityQuestion1"
               name="securityQuestion1"
               value={formData.securityQuestion1}
               onChange={handleChange}
@@ -170,20 +125,25 @@ export default function RegistrationPage() {
               <option>What is your favorite book?</option>
             </select>
             <input
+              id="answer1"
               name="answer1"
               type="text"
               placeholder="Answer"
               value={formData.answer1}
               onChange={handleChange}
               required
+              aria-required="true"
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
             />
           </div>
+
+          {/* Security Question 2 */}
           <div className="col-span-2">
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="securityQuestion2" className="block mb-1 text-sm font-medium text-gray-700">
               Security Question 2
             </label>
             <select
+              id="securityQuestion2"
               name="securityQuestion2"
               value={formData.securityQuestion2}
               onChange={handleChange}
@@ -194,19 +154,24 @@ export default function RegistrationPage() {
               <option>What is your favorite food?</option>
             </select>
             <input
+              id="answer2"
               name="answer2"
               type="text"
               placeholder="Answer"
               value={formData.answer2}
               onChange={handleChange}
               required
+              aria-required="true"
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
             />
           </div>
+
+          {/* Action Buttons */}
           <div className="col-span-2 flex justify-between mt-4">
             <button
               type="submit"
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              aria-label="Submit registration form"
             >
               Create Account
             </button>
@@ -214,12 +179,13 @@ export default function RegistrationPage() {
               type="button"
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
               onClick={() => navigate("/")}
+              aria-label="Cancel and return to homepage"
             >
               Cancel
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }

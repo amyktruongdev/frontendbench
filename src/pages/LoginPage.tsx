@@ -31,13 +31,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-red-50">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-red-300">
-        <h1 className="text-2xl font-bold text-center text-red-600 mb-6">
+    <main className="flex items-center justify-center min-h-screen bg-red-50" role="main" aria-label="Login Page">
+      <section className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-red-300" role="form" aria-labelledby="login-heading">
+        <h1 id="login-heading" className="text-2xl font-bold text-center text-red-600 mb-6">
           OpenBench Login
         </h1>
         {error && (
-          <p className="text-red-600 text-center mb-4 text-sm">{error}</p>
+          <p className="text-red-600 text-center mb-4 text-sm" role="alert" aria-live="assertive">{error}</p>
         )}
         <form className="flex flex-col gap-4" onSubmit={handleLogin}>
           <div>
@@ -50,13 +50,16 @@ export default function LoginPage() {
             <input
               type="text"
               id="uname"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
               required
+              aria-required="true"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             />
           </div>
+
           <div>
             <label
               htmlFor="psw"
@@ -67,16 +70,19 @@ export default function LoginPage() {
             <input
               type="password"
               id="psw"
+              name="password"
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
               placeholder="Enter Password"
               required
+              aria-required="true"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             />
           </div>
+
           <div className="flex justify-between items-center text-sm text-gray-600">
             <label className="flex items-center gap-2">
-              <input type="checkbox" defaultChecked name="remember" /> Remember
+              <input type="checkbox" defaultChecked name="remember" aria-checked="true"/> Remember
               me
             </label>
             <Link
@@ -86,22 +92,25 @@ export default function LoginPage() {
               Forgot password?
             </Link>
           </div>
+
           <div className="flex flex-col gap-3 mt-4">
             <button
               type="submit"
               className="w-full py-2 px-4 rounded-lg text-white bg-red-500 hover:bg-red-600"
+              aria-label="Log in to your account"
             >
               Login
             </button>
             <Link
               to="/registration"
               className="w-full py-2 px-4 rounded-lg bg-gray-200 text-center text-gray-800 hover:bg-gray-300"
+              aria-label="Create a new account"
             >
               Create Account
             </Link>
           </div>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

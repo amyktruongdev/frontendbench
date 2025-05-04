@@ -30,68 +30,70 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-8">
-      <h1 className="text-5xl font-extrabold text-red-600 text-center mb-8 drop-shadow">
-        OpenBench Admin Dashboard
-      </h1>
+    <main className="w-full max-w-5xl mx-auto p-8" role="main" aria-label="Admin Dashboard">
+  <h1 className="text-5xl font-extrabold text-red-600 text-center mb-8 drop-shadow">
+    OpenBench Admin Dashboard
+  </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
-          <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Manage Users
-            </h2>
-            <Button
-              onClick={() => navigate("/admin/manage-users")}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
-            >
-              Go to User Management
-            </Button>
-          </CardContent>
-        </Card>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6" role="region" aria-label="Admin Controls">
 
-        <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
-          <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Manage Equipment
-            </h2>
-            <Button
-              onClick={() => navigate("/admin/manage-equipment")}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
-            >
-              Go to Equipment Management
-            </Button>
-          </CardContent>
-        </Card>
+    <section role="region" aria-label="User Management">
+      <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
+        <CardContent className="p-6 flex flex-col items-center text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Users</h2>
+          <Button
+            onClick={() => navigate("/admin/manage-users")}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
+          >
+            Go to User Management
+          </Button>
+        </CardContent>
+      </Card>
+    </section>
 
-        <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
-          <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              View Logs
-            </h2>
-            <Button
-              onClick={() => navigate("/admin/logs")}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
-            >
-              View System Logs
-            </Button>
-          </CardContent>
-        </Card>
+    <section role="region" aria-label="Equipment Management">
+      <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
+        <CardContent className="p-6 flex flex-col items-center text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Manage Equipment</h2>
+          <Button
+            onClick={() => navigate("/admin/manage-equipment")}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
+          >
+            Go to Equipment Management
+          </Button>
+        </CardContent>
+      </Card>
+    </section>
 
-        <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
-          <CardContent className="p-6 flex flex-col items-center text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Send Alert
-            </h2>
-            <Button
-              onClick={() => navigate("/admin/send-alert")}
-              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
-            >
-              Send Gym-Wide Message
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <section role="region" aria-label="System Logs">
+      <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
+        <CardContent className="p-6 flex flex-col items-center text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">View Logs</h2>
+          <Button
+            onClick={() => navigate("/admin/logs")}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
+          >
+            View System Logs
+          </Button>
+        </CardContent>
+      </Card>
+    </section>
+
+    <section role="region" aria-label="Send Gym Alert">
+      <Card className="border-red-300 hover:shadow-lg transition transform hover:scale-105 cursor-pointer">
+        <CardContent className="p-6 flex flex-col items-center text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Send Alert</h2>
+          <Button
+            onClick={() => navigate("/admin/send-alert")}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded"
+          >
+            Send Gym-Wide Message
+          </Button>
+        </CardContent>
+      </Card>
+    </section>
+
+  </div>
+</main>
   );
 }
